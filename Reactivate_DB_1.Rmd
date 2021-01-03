@@ -3,12 +3,44 @@ title: "FlexDB_1"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
+    source_code: embed
+    theme: lumen
     vertical_layout: fill
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
+library(shiny)        #renderPlot, renderTable, sliderInput
+library(shinyWidgets) #radioGroupButtons
 ```
+
+Table
+=====================================
+Column {.sidebar data-width=200} 
+-------------------------------------
+Filter the data:
+
+```{r filters}
+# You can make this sidebar global by putting it ahead of Tab 1
+# below are 2 input options: a gorup of buttons, and a slider
+radioGroupButtons( # for categorical variables
+  inputId = "year", # this will allow the selection to be referenced as input$cyl
+  label = "Select Year of Vehicle", # NULL if you don't want a header
+  choiceNames = c("All", sort(unique(raw_data$year))), # can use paste, etc to make nicer display
+  choiceValues = c("All", sort(unique(raw_data$year))), # values in the data, need to line up with above
+  justified = TRUE, # will fill the width of the container it sits in (sidebar)
+  status = "primary"
+)
+sliderInput(
+  inputId = "displ", # referenced as input$displ
+  label = "Select Engine Displacement:",
+  value = range(raw_data$displ), # default selection, you can move the range around
+  min = (min(raw_data$displ)),
+  max = (max(raw_data$displ)),
+  step = 0.1
+)
 
 Column {data-width=650}
 -----------------------------------------------------------------------
