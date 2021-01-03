@@ -25,6 +25,7 @@ library(shinyWidgets) #radioGroupButtons
 
 data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_output.csv')
 
+raw_data = data_input
 ```
 
 
@@ -37,8 +38,10 @@ Filter the data:
 ```{r filters}
 # You can make this sidebar global by putting it ahead of Tab 1
 # below are 2 input options: a gorup of buttons, and a slider
+data = raw_data
+
 discount_range = seq(0, 100, by=5)
-selected_range = as.numeric(data_input$Discount_predictions[!is.na(data_input$Discount_predictions)])
+selected_range = as.numeric(data$Discount_predictions[!is.na(data$Discount_predictions)])
 
 radioGroupButtons( # for categorical variables
   inputId = "Discount_percent", # this will allow the selection to be referenced as input$cyl
@@ -48,6 +51,7 @@ radioGroupButtons( # for categorical variables
   justified = TRUE, # will fill the width of the container it sits in (sidebar)
   status = "primary"
 )
+
 sliderInput(
   inputId = "Discount_range", # referenced as input$displ
   label = "Select discount label",
@@ -57,6 +61,30 @@ sliderInput(
   step = 5
 )
 
+#to dos
+#product ID 
+#location ID buttons
+#Quality or Num_freshdays
+#category
+
+
+# This will build a dataframe to use throughout the dashboard. To reference this dataframe, you will need to be in some reactive element ex: renderText({nrow(use_data())}). This is essentially a function and so you will need to use parentheses at the end like this: use_data()
+
+#item is the selected product row or all items of that product? 
+
+# use_data <- reactive({
+#   df <-
+#     data %>%
+#     filter(between(item, min(input$item), max(input$item)))
+#   
+#   # this if statement will filter for the selection of the radioGroupButtons
+#   if (input$year != "All") {
+#     df <- df %>% filter(year == input$year)
+#   }
+#   
+#   df
+# })
+
 ```
 
 Producttable {data-width=450}
@@ -64,7 +92,22 @@ Producttable {data-width=450}
 
 ### Product list and location
 
-```{r}
+```{r table}
+#display top 10 items that require attention table here
+
+#this will display a top 10 table that is filtered based on the selections above
+# renderTable({ # use {...} for the output (an expression)
+#     use_data() %>%
+#       arrange(desc(hwy)) %>%
+#       slice(1:10) %>%
+#       mutate(Rank = row_number()) %>%
+#       select(Rank, year, manufacturer, model, trans, hwy, fl, class)
+#   },
+#   # renderTable takes additional arguments after the {...}
+#   spacing = "xs",
+#   align = "l",
+#   bordered = TRUE
+# )
 
 ```
 
@@ -89,6 +132,7 @@ Counter {data-width=150}
 ### Expiry date indicator: Chart for number of days till expiry of product
 
 ```{r}
+#line plot to indicate expiry dates of item selected and discount predictions for that item or previous sales with discount to give employee some idea on deciding discount
 
 ```
 
