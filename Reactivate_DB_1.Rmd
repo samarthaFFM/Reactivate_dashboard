@@ -28,7 +28,6 @@ data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_o
 raw_data = data_input
 ```
 
-
 ReACTIVATE Dashboard for supermarket employees
 =====================================
 Column {.sidebar data-width=200} 
@@ -42,6 +41,41 @@ data = raw_data
 
 discount_range = seq(0, 100, by=5)
 selected_range = as.numeric(data$Discount_predictions[!is.na(data$Discount_predictions)])
+
+
+# add numeric input to filter remaining fresh days 
+
+numericInput(
+  inputId="freshdays",
+  label="Remaining Fresh Days",
+  value =3,
+  min = 0,
+  max = 100,
+  step = 1,
+  width = NULL
+)
+
+
+# add checkbox to select category 
+
+checkboxGroupInput(
+  inputId="category",
+  label="Select by Category",
+  choices = c("Fruit", "Meat","Yogurt","Drink"),
+  selected = "Fruit"
+)
+
+# add checkbox to select location ID
+
+checkboxGroupInput(
+  inputId="location",
+  label="Select by Location",
+  choices = c("Fridges","Shelves"),  
+  #plz note "Fridges" instead of FRI124(fridge+number in datasheet) is shown here.
+  #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet 
+  selected = "Shelves"
+)
+
 
 radioGroupButtons( # for categorical variables
   inputId = "Discount_percent", # this will allow the selection to be referenced as input$cyl
