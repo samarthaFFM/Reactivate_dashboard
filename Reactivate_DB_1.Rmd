@@ -23,7 +23,7 @@ library(shinyWidgets) #radioGroupButtons
 
 #read transaction datasets if necessary 
 
-data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_output.csv')
+data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
 
 raw_data = data_input
 ```
