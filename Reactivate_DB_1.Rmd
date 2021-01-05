@@ -1,11 +1,18 @@
 ---
-title: "FlexDB_1"
+title: "ReACTIVATE"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
-    source_code: embed
-    theme: lumen
+    source_code: "https://github.com/samarthaFFM/Reactivate_dashboard"
+    theme: flatly #lumen, yeti, flatly
     vertical_layout: fill
+    navbar:
+      - { title: "About", 
+          href: "https://react-now.com/",
+          align: right }
+    social: [ "menu" ]
+    css: styles.css
+    logo: logo.png
 runtime: shiny
 ---
 
@@ -28,9 +35,10 @@ data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
 raw_data = data_input
 ```
 
-ReACTIVATE Dashboard for supermarket employees
+Dashboard for supermarket employees {data-icon="fa-columns"}
 =====================================
-Column {.sidebar data-width=200} 
+
+LeftColumn {.sidebar data-width=200} 
 -------------------------------------
 Filter the data:
 
@@ -121,9 +129,8 @@ sliderInput(
 
 ```
 
-Producttable {data-width=350}
+ProductTableColumn {data-width=350}
 -----------------------------------------------------------------------
-
 ### Product list and location
 
 ```{r table}
@@ -164,10 +171,9 @@ Producttable {data-width=350}
 # })
 
 ```
------------------------------------------------------------------------
 
 
-PrintLabel {data-width=150} 
+RightColumn {data-width=150}
 -----------------------------------------------------------------------
 
 ```{r print function}
@@ -182,17 +188,29 @@ radioGroupButtons( # for categorical variables
 )
 ```
 
-### Checked products - Counter list of products already checked today
-
-```{r}
-
-```
-
 
 ### To be checked -  Counter list of products to be checked today
-
 ```{r}
-
+renderGauge({
+  rate <- 18
+  gauge(rate, min = 0, max = 30, symbol = '', gaugeSectors(
+    success = c(0, 5), warning = c(6, 19), danger = c(20, 30)
+  ))
+})
 ```
 
------------------------------------------------------------------------
+
+### Checked products - Counter list of products already checked today
+```{r}
+renderGauge({
+  rate <- 82.6
+  gauge(rate, min = 0, max = 100, symbol = '%', gaugeSectors(
+    success = c(80, 100), warning = c(40, 79), danger = c(0, 39)
+  ))
+})
+```
+
+
+Dashboard for supermarket managers {data-icon="fa-user-shield"}
+=====================================
+
