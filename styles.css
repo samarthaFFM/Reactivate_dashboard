@@ -1,0 +1,65 @@
+body {
+  padding-top: 69px;
+}
+
+.navbar-logo img {
+    max-height: 58px;
+}
+
+.navbar-inverse, .navbar-inverse .navbar-nav>li>a {
+    background-color: #fff;
+    color: black;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-logo {
+        background-color: hsl(37, 71%, 98%);
+        color: black;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+    color: #ffffff;
+    background-color: #DC982D;
+}
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: #2c3e50;
+    background-color: hsl(37, 71%, 98%);
+}
+
+.section.sidebar {
+  top: 60px;
+  background-color: hsl(37, 71%, 98%);
+}
+
+.btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #ffffff;
+    background-color: #323945;
+    border-color: #323945;
+}
+.btn-primary {
+    color: #ffffff;
+    background-color: #44526a;
+    border-color: #44526a;
+}
+
+.bg-primary {
+  background-color: rgba(44, 62, 80, 0.7);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: rgba(44, 62, 80, 0.7);
+}
+
+
+.bg-info {
+  background-color: rgba(52, 152, 219, 0.7);
+}
+
+.bg-warning {
+  background-color: rgba(243, 156, 18, 0.7);
+}
+
+.bg-success {
+  background-color: rgba(24, 188, 156, 0.7);
+}
+
+.bg-danger {
+  background-color: rgba(231, 76, 60, 0.7);
+}
