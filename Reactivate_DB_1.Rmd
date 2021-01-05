@@ -63,7 +63,7 @@ Filter the data:
 numericInput(
   inputId="Freshdays",
   label="Remaining Fresh Days",
-  value = 3,
+  value = 7,
   min = 0,
   max = 100,
   step = 1,
@@ -76,7 +76,7 @@ checkboxGroupInput(
   inputId="Category",
   label="Select by Category",
   choices = c("Fruit", "Meat","Yogurt","Drink"),
-  selected = "Fruit"
+  selected = c("Fruit", "Meat","Yogurt","Drink")
 )
 
 
@@ -88,7 +88,7 @@ checkboxGroupInput(
   choices = c("FRIDGE", "SHELF"),
   #plz note "Fridges" instead of FRI124(fridge+number in datasheet) is shown here.
   #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet
-  selected = "SHELF"
+  selected = c("FRIDGE", "SHELF")
 )
 # 
 
@@ -97,21 +97,21 @@ checkboxGroupInput(
 # radioGroupButtons( # for categorical variables
 #   inputId = "Discount_percent", # this will allow the selection to be referenced as input$cyl
 #   label = "Select Discount", # NULL if you don't want a header
-#   choiceNames = c("10%", paste(dataframe2$Discount_predictions*100,'%')), # can use paste, etc to make nicer display
-#   choiceValues = c("10%", paste(dataframe2$Discount_predictions*100,'%')), # values in the data, need to line up with above
+#   choiceNames = c("10%", paste(dataframe_filtered$Discount_predictions*100,'%')), # can use paste, etc to make nicer display
+#   choiceValues = c("10%", paste(dataframe_filtered$Discount_predictions*100,'%')), # values in the data, need to line up with above
 #   justified = TRUE, # will fill the width of the container it sits in (sidebar)
 #   status = "primary"
 # )
 
 
-disc_range = seq(0, 100, by=5)
+disc_range = seq(from=0, to=100, by=100)
 
 sliderInput(
   inputId = "Discount_range", # referenced as input$displ
   label = "Select discount label",
   value = disc_range, # default selection, you can move the range around
-  min = (min(disc_range)),
-  max = (max(disc_range)),
+  min = 0, #(min(disc_range)),
+  max = 100, #(max(disc_range)),
   step = 5
 )
 
@@ -123,11 +123,19 @@ sliderInput(
 #item is the selected product row or all items of that product? 
 
 
-dataframe2 <- reactive({
+dataframe_filtered <- reactive({
         dataframe <- raw_data %>% filter(Freshdays <= input$Freshdays) %>% filter(Category %in% input$Category) 
         dataframe <- dataframe %>% filter(Location %in% input$Location) %>% filter(Discount_predictions <= max(input$Discount_range)/100 & Discount_predictions >= min(input$Discount_range)/100)
         dataframe
 })
+
+dataframe_filtered_without_days <- reactive({
+        dataframe <- raw_data %>% filter(Category %in% input$Category) 
+        dataframe <- dataframe %>% filter(Location %in% input$Location) %>% filter(Discount_predictions <= max(input$Discount_range)/100 & Discount_predictions >= min(input$Discount_range)/100)
+        dataframe
+})
+
+
 
 ```
 
@@ -138,8 +146,8 @@ ProductTableColumn {data-width=350}
 ```{r table}
 #display top 10 items that require attention table here
 
-renderTable({dataframe2() %>% arrange(Priority_clusters)})
-#datatable(reactive({dataframe2() %>% arrange(Priority_clusters)}))																   
+renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
+#datatable(reactive({dataframe_filtered() %>% arrange(Priority_clusters)}))																   
 
 # #this will display a top 10 table that is filtered based on the selections above
 # renderTable({ # use {...} for the output (an expression)
@@ -164,7 +172,7 @@ renderTable({dataframe2() %>% arrange(Priority_clusters)})
 
 #LineDiagram {data-width=250}
 
-# renderPlot({dataframe2() %>% arrange(Priority_clusters) %>%
+# renderPlot({dataframe_filtered() %>% arrange(Priority_clusters) %>%
 #   ggplot(aes(x = Freshdays, y = Product_ID, group = Priority_clusters)) +
 #   geom_line() + 
 #   geom_point() +
@@ -173,7 +181,7 @@ renderTable({dataframe2() %>% arrange(Priority_clusters)})
 
 
 
-renderPlot({dataframe2() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
+renderPlot({dataframe_filtered() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
   ggplot(aes(x = time, y = Product_ID )) +
   geom_line(aes(color= factor(Priority_clusters))) + 
   geom_point() +
@@ -184,7 +192,7 @@ renderPlot({dataframe2() %>% mutate(today = rep(Sys.Date(), length(Freshdays))) 
                   segment.color = 'grey50') +theme_classic2() })
 
 
-# line_plot <- dataframe2() %>% arrange(Priority_clusters) %>%
+# line_plot <- dataframe_filtered() %>% arrange(Priority_clusters) %>%
 #   ggplot(aes(x = Freshdays, x = Product_ID, group = Priority_clusters)) +
 #   geom_line() + 
 #   geom_point() +
@@ -211,7 +219,7 @@ RightColumn {data-width=150}
 
 ```{r print function}
 
-x =raw_data
+x = raw_data
 
 radioGroupButtons( # for categorical variables
   inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
@@ -223,36 +231,48 @@ radioGroupButtons( # for categorical variables
 )
 ```
 
-### Checked products - All products to be checked
+### Expired or expiring next
 ```{r all products to be checked}
 
 #to do 
 #Counter list of products already checked today
 
 renderValueBox({
-  valueBox(prettyNum(dataframe2() %>% filter(Freshdays >= 0 & Freshdays <= 7) %>% 
-                       nrow(), big.mark = ','), 
-           icon = 'fa-walking')
+  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays < 7) %>% nrow(), 
+                     big.mark = ','), icon = 'fa-walking')
 })
 ```
 
-### To be checked -  Expired
+### Expired today - To be checked
 ```{r expired}
 
 #Counter list of products to be checked today
 renderValueBox({
-  valueBox(prettyNum(dataframe2() %>% filter(Freshdays == 0) %>% 
-                       nrow(), big.mark = ','), 
-           icon = 'fa-dizzy', color = 'danger')
+  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays <= 0) %>% nrow(), 
+                     big.mark = ','), icon = 'fa-dizzy', color = 'danger')
 })
 ```
 
-### To be checked -  Within a week
+### Today's workload
+```{r}
+renderGauge({
+  value <- dataframe_filtered() %>% filter(Freshdays <= 0) %>% nrow()
+  min <- 0
+  max <- dataframe_filtered() %>% filter(Freshdays < 7) %>% nrow()
+  step <- (max - min) / 3
+  gauge(value, min = min, max = max, symbol = '', 
+        gaugeSectors(success = c(min, step-0.5), warning = c(step, 2*step-0.5), 
+                     danger = c(2*step, max)
+  ))
+})
+```
+
+### Expire within a week - To be checked
 ```{r week 1}
 
 #Counter list of products to be checked today
 renderValueBox({
-  valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 0 & Freshdays < 7) %>% 
+  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays > 0 & Freshdays < 7) %>% 
                        nrow(), big.mark = ','), 
            icon = 'fa-exclamation-triangle', color = 'warning')
 })
@@ -263,29 +283,23 @@ renderValueBox({
 ```{r good for more than a week}
 
 renderValueBox({
-  valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 7) %>% 
-                       nrow(), big.mark = ','), 
-           icon = 'fa-seedling', color = 'info')
+  valueBox(prettyNum(dataframe_filtered_without_days() %>% filter(Freshdays >= 7) %>% nrow(), 
+                     big.mark = ','), icon = 'fa-seedling', color = 'info')
 })
 
 ```
 
-### To be checked -  Counter list of products to be checked today
+### Portion of good products
 ```{r}
 renderGauge({
-  rate <- 18
-  gauge(rate, min = 0, max = 30, symbol = '', gaugeSectors(
-    success = c(0, 5), warning = c(6, 19), danger = c(20, 30)
-  ))
-})
-```
-
-### Checked products - Counter list of products already checked today
-```{r}
-renderGauge({
-  rate <- 82.6
-  gauge(rate, min = 0, max = 100, symbol = '%', gaugeSectors(
-    success = c(80, 100), warning = c(40, 79), danger = c(0, 39)
+  min <- 0
+  max <- 100
+  total <- (dataframe_filtered_without_days() %>% nrow())
+  value <- (dataframe_filtered_without_days() %>% filter(Freshdays >= 7) %>% 
+                    nrow()) / total
+  value <- ifelse(total == 0, 100, round(value * 100, digits = 1))
+  gauge(value, min = min, max = max, symbol = '%', gaugeSectors(
+    success = c(80, max), warning = c(40, 79), danger = c(min, 39)
   ))
 })
 ```
