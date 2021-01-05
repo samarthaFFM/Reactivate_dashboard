@@ -43,9 +43,9 @@ library(ggpubr)
 #<<<<<<< HEAD
 #data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
 
-data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_output.csv')
+#data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_output.csv')
 #=======
-#data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
+data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
 #>>>>>>> c8df30b3e39ef1ed7b2412f55711a47b3cade733
 
 raw_data = data_input
