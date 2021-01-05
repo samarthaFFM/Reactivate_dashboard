@@ -23,6 +23,8 @@ library(shinyWidgets) #radioGroupButtons
 
 #read transaction datasets if necessary 
 
+#data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
+
 data_input = read.csv('/Users/samarthts/Downloads/Product_datasheets.xlsx - DB_output.csv')
 
 raw_data = data_input
@@ -109,13 +111,14 @@ sliderInput(
 # use_data <- reactive({
 #   df <-
 #     data %>%
+#     #          
 #     filter(between(item, min(input$item), max(input$item)))
-#   
+# 
 #   # this if statement will filter for the selection of the radioGroupButtons
 #   if (input$year != "All") {
 #     df <- df %>% filter(year == input$year)
 #   }
-#   
+# 
 #   df
 # })
 
@@ -129,7 +132,7 @@ Producttable {data-width=350}
 ```{r table}
 #display top 10 items that require attention table here
 
-#this will display a top 10 table that is filtered based on the selections above
+# #this will display a top 10 table that is filtered based on the selections above
 # renderTable({ # use {...} for the output (an expression)
 #     use_data() %>%
 #       arrange(desc(hwy)) %>%
