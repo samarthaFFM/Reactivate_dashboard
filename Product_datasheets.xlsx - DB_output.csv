@@ -1,12 +1,12 @@
-Product_ID,Batch code,Category,Description,Expiration,Freshdays,StatusNow,Location_ID,InventoryQTY,"Quality (smell, colour, textures, hardness)",Priority_clusters,Discount_predictions
-AA1111,Batch 1233,Yogurt,Banana Yogurt 1L,2020-12-07,Already Expired ,TRASH,FRI23,3,bad smell -  check,1,NA
-AA1222,Batch 1233,Yogurt,Strawberry Yogurt 0.1% fett 1L,2020-12-11,Expires in 2 days,30% OFF,FRI23,4,fresh and okay texture ,2,0.3
-AA1333,Batch 1233,Yogurt,Blueberry Vanille Yogurt 1L,2021-05-06,180,NO,FRI23,13,fine,3,NA
-DD5655,Batch 1233,Drink,Juice Lychee 330ml,2020-12-17,5,NO,SH14,30,fine,3,NA
-DD5656,Batch 1236,Drink,Coconut water 330ml,2020-12-11,Expired today,50% OFF,SH14,40,fine,1,0.5
-MM7899,Batch 1236,Meat,Chicken with BBQ-sause 185g,2021-01-03,24,NO,FRI09,5,fine,3,NA
-MM7849,Batch 1236,Meat,Roasted Pork ca. 110g,2020-12-20,6,NO,FRI10,6,fine,3,NA
-MM7888,Batch 1240,Meat,Beef 2pc 200g,2020-12-25,14,NO,FRI11,2,fresh and okay texture ,3,NA
-FF9090,Batch 1240,Fruit,Avocado 1 piece,2020-12-08,Already Expired ,TRASH,SH06,2,bad smell -  check,1,NA
-FF6543,Batch 1240,Fruit,Zespri Kiwifruit 1kg,2020-12-23,8,NO,SH06,15,Softening of texture or loss of firmness ,3,NA
-FF3892,Batch 1243,Fruit,Dole Banana 1kg,2020-12-24,9,NO,SH06,36,fresh and okay texture ,3,NA
+Product_ID,Batch code,Category,Description,Expiration,Freshdays,StatusNow,Location_ID,Location,InventoryQTY,"Quality (smell, colour, textures, hardness)",Priority_clusters,Discount_predictions
+AA1111,Batch 1233,Yogurt,Banana Yogurt 1L,2020-12-07,0,TRASH,FRI23,FRIDGE,3,bad smell -  check,1,0
+AA1222,Batch 1233,Yogurt,Strawberry Yogurt 0.1% fett 1L,2020-12-11,2,30% OFF,FRI23,FRIDGE,4,fresh and okay texture ,2,0.3
+AA1333,Batch 1233,Yogurt,Blueberry Vanille Yogurt 1L,2021-05-06,180,NO,FRI23,FRIDGE,13,fine,3,0
+DD5655,Batch 1233,Drink,Juice Lychee 330ml,2020-12-17,5,NO,SH14,SHELF,30,fine,3,0
+DD5656,Batch 1236,Drink,Coconut water 330ml,2020-12-11,0,50% OFF,SH14,SHELF,40,fine,1,0.5
+MM7899,Batch 1236,Meat,Chicken with BBQ-sause 185g,2021-01-03,24,NO,FRI09,FRIDGE,5,fine,3,0
+MM7849,Batch 1236,Meat,Roasted Pork ca. 110g,2020-12-20,6,NO,FRI10,FRIDGE,6,fine,3,0
+MM7888,Batch 1240,Meat,Beef 2pc 200g,2020-12-25,14,NO,FRI11,FRIDGE,2,fresh and okay texture ,3,0
+FF9090,Batch 1240,Fruit,Avocado 1 piece,2020-12-08,0,TRASH,SH06,SHELF,2,bad smell -  check,1,0
+FF6543,Batch 1240,Fruit,Zespri Kiwifruit 1kg,2020-12-23,8,NO,SH06,SHELF,15,Softening of texture or loss of firmness ,3,0
+FF3892,Batch 1243,Fruit,Dole Banana 1kg,2020-12-24,9,NO,SH06,SHELF,36,fresh and okay texture ,3,0
