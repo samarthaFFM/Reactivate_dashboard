@@ -10,10 +10,17 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
+
 library(flexdashboard)
 library(tidyverse)
 library(shiny)        #renderPlot, renderTable, sliderInput
 library(shinyWidgets) #radioGroupButtons
+library(flexdashboard)
+library(readr)
+library(DT)
+library(tidyverse)
+library(lubridate)
+library(plotly)
 
 ```
 
@@ -39,88 +46,80 @@ Filter the data:
 ```{r filters}
 # You can make this sidebar global by putting it ahead of Tab 1
 # below are 2 input options: a gorup of buttons, and a slider
-data = raw_data
 
-discount_range = seq(0, 100, by=5)
-selected_range = as.numeric(data$Discount_predictions[!is.na(data$Discount_predictions)])
+#selected_range = as.numeric(data$Discount_predictions[!is.na(data$Discount_predictions)])
 
 
 # add numeric input to filter remaining fresh days 
 
 numericInput(
-  inputId="freshdays",
+  inputId="Freshdays",
   label="Remaining Fresh Days",
-  value =3,
+  value = 3,
   min = 0,
   max = 100,
   step = 1,
   width = NULL
 )
 
-
 # add checkbox to select category 
 
 checkboxGroupInput(
-  inputId="category",
+  inputId="Category",
   label="Select by Category",
   choices = c("Fruit", "Meat","Yogurt","Drink"),
   selected = "Fruit"
 )
 
+
 # add checkbox to select location ID
 
 checkboxGroupInput(
-  inputId="location",
+  inputId="Location",
   label="Select by Location",
-  choices = c("Fridges","Shelves"),  
+  choices = c("FRIDGE", "SHELF"),
   #plz note "Fridges" instead of FRI124(fridge+number in datasheet) is shown here.
-  #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet 
-  selected = "Shelves"
+  #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet
+  selected = "SHELF"
 )
+# 
+
+# for selecting discount
+
+# radioGroupButtons( # for categorical variables
+#   inputId = "Discount_percent", # this will allow the selection to be referenced as input$cyl
+#   label = "Select Discount", # NULL if you don't want a header
+#   choiceNames = c("10%", paste(dataframe2$Discount_predictions*100,'%')), # can use paste, etc to make nicer display
+#   choiceValues = c("10%", paste(dataframe2$Discount_predictions*100,'%')), # values in the data, need to line up with above
+#   justified = TRUE, # will fill the width of the container it sits in (sidebar)
+#   status = "primary"
+# )
 
 
-radioGroupButtons( # for categorical variables
-  inputId = "Discount_percent", # this will allow the selection to be referenced as input$cyl
-  label = "Select Discount", # NULL if you don't want a header
-  choiceNames = c("20%", paste(selected_range*100,'%')), # can use paste, etc to make nicer display
-  choiceValues = c("20%", paste(selected_range*100,'%')), # values in the data, need to line up with above
-  justified = TRUE, # will fill the width of the container it sits in (sidebar)
-  status = "primary"
-)
+disc_range = seq(0, 100, by=5)
 
 sliderInput(
   inputId = "Discount_range", # referenced as input$displ
   label = "Select discount label",
-  value = discount_range, # default selection, you can move the range around
-  min = (min(discount_range)),
-  max = (max(discount_range)),
+  value = disc_range, # default selection, you can move the range around
+  min = (min(disc_range)),
+  max = (max(disc_range)),
   step = 5
 )
 
-#to dos
-#product ID 
-#location ID buttons
-#Quality or Num_freshdays
-#category
+
 
 
 # This will build a dataframe to use throughout the dashboard. To reference this dataframe, you will need to be in some reactive element ex: renderText({nrow(use_data())}). This is essentially a function and so you will need to use parentheses at the end like this: use_data()
 
 #item is the selected product row or all items of that product? 
 
-# use_data <- reactive({
-#   df <-
-#     data %>%
-#     #          
-#     filter(between(item, min(input$item), max(input$item)))
-# 
-#   # this if statement will filter for the selection of the radioGroupButtons
-#   if (input$year != "All") {
-#     df <- df %>% filter(year == input$year)
-#   }
-# 
-#   df
-# })
+
+dataframe2 <- reactive({
+        dataframe <- raw_data %>% filter(Freshdays <= input$Freshdays) %>% filter(Category %in% input$Category) 
+        dataframe <- dataframe %>% filter(Location %in% input$Location) %>% filter(Discount_predictions <= max(input$Discount_range)/100 & Discount_predictions >= min(input$Discount_range)/100)
+        dataframe
+})
 
 ```
 
@@ -131,6 +130,8 @@ Producttable {data-width=350}
 
 ```{r table}
 #display top 10 items that require attention table here
+
+renderTable({dataframe2()%>% arrange(Priority_clusters)})
 
 # #this will display a top 10 table that is filtered based on the selections above
 # renderTable({ # use {...} for the output (an expression)
@@ -175,27 +176,75 @@ PrintLabel {data-width=150}
 
 ```{r print function}
 
+x =raw_data
+
 radioGroupButtons( # for categorical variables
   inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
   label = "PRINT LABEL", # NULL if you don't want a header
-  choiceNames = c("None", paste(selected_range*100,'%')), # can use paste, etc to make nicer display
-  choiceValues = c("None", paste(selected_range*100,'%')), # values in the data, need to line up with above
+  choiceNames = c("None", paste(x$Discount_range*100,'%')), # can use paste, etc to make nicer display
+  choiceValues = c("None", paste(x$Discount_range,'%')), # values in the data, need to line up with above
   justified = TRUE, # will fill the width of the container it sits in (sidebar)
   status = "primary"
 )
 ```
 
-### Checked products - Counter list of products already checked today
+### Checked products - All products to be checked
 
-```{r}
+
+```{r all products to be checked}
+
+#to do 
+#Counter list of products already checked today
+
+
+renderValueBox({
+  valueBox(prettyNum(dataframe2() %>% filter(Freshdays >= 0 & Freshdays <= 7) %>% 
+                       nrow(), big.mark = ','), 
+           icon = 'fa-walking')
+})
 
 ```
 
 
-### To be checked -  Counter list of products to be checked today
+### To be checked -  Expired
 
-```{r}
+```{r expired}
+
+#Counter list of products to be checked today
+renderValueBox({
+  valueBox(prettyNum(dataframe2() %>% filter(Freshdays == 0) %>% 
+                       nrow(), big.mark = ','), 
+           icon = 'fa-dizzy')
+})
 
 ```
+
+
+### To be checked -  Within a week
+
+```{r week 1}
+
+#Counter list of products to be checked today
+renderValueBox({
+  valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 0 & Freshdays < 7) %>% 
+                       nrow(), big.mark = ','), 
+           icon = 'fa-exclamation-triangle')
+})
+
+```
+
+
+### All good products
+
+```{r good for more than a week}
+
+renderValueBox({
+  valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 7) %>% 
+                       nrow(), big.mark = ','), 
+           icon = 'fa-seedling')
+})
+
+```
+
 
 -----------------------------------------------------------------------
