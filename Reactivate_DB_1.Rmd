@@ -28,6 +28,8 @@ library(DT)
 library(tidyverse)
 library(lubridate)
 library(plotly)
+library(ggrepel)
+library(ggpubr)				
 
 ```
 
@@ -136,7 +138,8 @@ ProductTableColumn {data-width=350}
 ```{r table}
 #display top 10 items that require attention table here
 
-renderTable({dataframe2()%>% arrange(Priority_clusters)})
+renderTable({dataframe2() %>% arrange(Priority_clusters)})
+#datatable(reactive({dataframe2() %>% arrange(Priority_clusters)}))																   
 
 # #this will display a top 10 table that is filtered based on the selections above
 # renderTable({ # use {...} for the output (an expression)
@@ -161,6 +164,34 @@ renderTable({dataframe2()%>% arrange(Priority_clusters)})
 
 #LineDiagram {data-width=250}
 
+# renderPlot({dataframe2() %>% arrange(Priority_clusters) %>%
+#   ggplot(aes(x = Freshdays, y = Product_ID, group = Priority_clusters)) +
+#   geom_line() + 
+#   geom_point() +
+#   ylab('Product ID') +
+#   xlab('days till expiry')})
+
+
+
+renderPlot({dataframe2() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
+  ggplot(aes(x = time, y = Product_ID )) +
+  geom_line(aes(color= factor(Priority_clusters))) + 
+  geom_point() +
+  ylab('Product ID') +
+  xlab('days till expiry') + geom_label_repel(aes(label = Freshdays),
+                  box.padding   = 0.35, 
+                  point.padding = 0.5,
+                  segment.color = 'grey50') +theme_classic2() })
+
+
+# line_plot <- dataframe2() %>% arrange(Priority_clusters) %>%
+#   ggplot(aes(x = Freshdays, x = Product_ID, group = Priority_clusters)) +
+#   geom_line() + 
+#   geom_point() +
+#   ylab('Product ID') +
+#   xlab('days till expiry')
+
+#ggplotly(line_plot)
 #line plot to indicate expiry dates of item selected and discount predictions for that item or previous sales with discount to give employee some idea on deciding discount
 
 # renderPlot({ # renderPlot is only required becuase we are referencing someting reactive: use_data(). Otherwise we could just use ggplot(raw_data,...)
