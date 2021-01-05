@@ -243,7 +243,7 @@ renderValueBox({
 renderValueBox({
   valueBox(prettyNum(dataframe2() %>% filter(Freshdays == 0) %>% 
                        nrow(), big.mark = ','), 
-           icon = 'fa-dizzy')
+           icon = 'fa-dizzy', color = 'danger')
 })
 ```
 
@@ -254,7 +254,7 @@ renderValueBox({
 renderValueBox({
   valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 0 & Freshdays < 7) %>% 
                        nrow(), big.mark = ','), 
-           icon = 'fa-exclamation-triangle')
+           icon = 'fa-exclamation-triangle', color = 'warning')
 })
 
 ```
@@ -265,7 +265,7 @@ renderValueBox({
 renderValueBox({
   valueBox(prettyNum(dataframe2() %>% filter(Freshdays > 7) %>% 
                        nrow(), big.mark = ','), 
-           icon = 'fa-seedling')
+           icon = 'fa-seedling', color = 'info')
 })
 
 ```
