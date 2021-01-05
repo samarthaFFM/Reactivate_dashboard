@@ -259,7 +259,6 @@ renderGauge({
 })
 ```
 
------------------------------------------------------------------------
 
 Dashboard for supermarket managers {data-icon="fa-user-shield"}
 =====================================
