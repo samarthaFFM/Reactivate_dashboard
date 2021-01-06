@@ -170,7 +170,7 @@ renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
 ```
 
 
-### Expiry date indicator: Chart for number of days till expiry of product
+### Expiry date indicator: Chart for number of days till the expiry of product
 
 ```{r}
 
@@ -222,14 +222,12 @@ RightColumn {data-width=150}
 -----------------------------------------------------------------------
 
 ```{r print function}
-
-x = raw_data
-
+x = raw_data[which(raw_data$Discount_predictions != 0),]
 radioGroupButtons( # for categorical variables
   inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
   label = "PRINT LABEL", # NULL if you don't want a header
-  choiceNames = c("None", paste(x$Discount_range*100,'%')), # can use paste, etc to make nicer display
-  choiceValues = c("None", paste(x$Discount_range,'%')), # values in the data, need to line up with above
+  choiceNames = c("None", paste(unique(x$Discount_predictions*100),'%')), # can use paste, etc to make nicer display
+  choiceValues = c("None", paste(unique(x$Discount_predictions*100),'%')), # values in the data, need to line up with above
   justified = TRUE, # will fill the width of the container it sits in (sidebar)
   status = "primary"
 )
