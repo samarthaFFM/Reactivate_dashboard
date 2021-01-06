@@ -44,7 +44,7 @@ data_input = read.csv('./Product_datasheets.xlsx - DB_output.csv')
 raw_data = data_input
 ```
 
-Dashboard for supermarket employees {data-icon="fa-columns"}
+Dashboard for supermarket employees {data-icon="fa-user-shield"}
 =====================================
 
 LeftColumn {.sidebar data-width=200} 
@@ -305,6 +305,27 @@ renderGauge({
 ```
 
 
-Dashboard for supermarket managers {data-icon="fa-user-shield"}
+Inventory {data-icon="fa-columns" data-orientation=rows}
 =====================================
+
+LeftColumn {.sidebar data-width=200} 
+-------------------------------------
+```{r}
+textInput(inputId = "Search", label = "", value = "", width = NULL, placeholder = "Search for...")
+```
+
+
+MainColumn {data-width=500} 
+-------------------------------------
+### Table of all products
+```{r}
+dataframe_search <- reactive({
+  raw_data
+  #dataframe <- raw_data %>% filter(findDescription %in% input$Search)
+  #dataframe
+})
+
+renderTable({dataframe_search() %>% arrange(Product_ID)})
+```
+
 
