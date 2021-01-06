@@ -161,7 +161,8 @@ ProductTableColumn {data-width=350}
 ```{r table}
 #display top 10 items that require attention table here
 
-renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
+renderTable({dataframe_filtered() %>% arrange(Priority_clusters) %>% select(-c(Batch.code, Priority_clusters, Discount_predictions)) 
+  })
 #datatable(reactive({dataframe_filtered() %>% arrange(Priority_clusters)}))																   
 
 # #this will display a top 10 table that is filtered based on the selections above
@@ -258,7 +259,7 @@ renderGauge({
 <!-- }) -->
 <!-- ``` -->
 
-### Expired today - To be thrashed
+### Expired today - Remove from shelves
 ```{r expired}
 
 #Counter list of products to be checked today
@@ -307,7 +308,9 @@ renderGauge({
 })
 ```
 
-### Print Label
+### Print Discount offer 
+
+Print the discount offer label according to the product selected 
 
 ```{r print function}
 x = raw_data[which(raw_data$Discount_predictions != 0),]
