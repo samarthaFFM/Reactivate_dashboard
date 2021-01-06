@@ -1,0 +1,16 @@
+Product_ID,Batch code,Category,Description,Expiration,Freshdays,StatusNow,Location_ID,Location,InventoryQTY,"Quality (smell, colour, textures, hardness)",Priority_clusters,Discount_predictions
+AA1111,Batch 1233,Yogurt,Banana Yogurt 1L,2020-12-07,0,TRASH,FRI23,Fridge,3,bad smell -  check,1,0
+AA1222,Batch 1233,Yogurt,Strawberry Yogurt 0.1% fett 1L,2020-12-11,4,30% OFF,FRI23,Fridge,4,fresh and okay texture ,2,0.3
+AA1333,Batch 1233,Yogurt,Blueberry Vanille Yogurt 1L,2021-05-06,150,NO,FRI23,Fridge,13,fine,3,0
+DD5655,Batch 1233,Drink,Juice Lychee 330ml,2020-12-17,10,NO,SH14,Shelf,30,fine,3,0
+DD5656,Batch 1236,Drink,Coconut water 330ml,2020-12-11,4,50% OFF,SH14,Shelf,40,fine,2,0.5
+MM7899,Batch 1236,Meat,Chicken with BBQ-sause 185g,2021-01-03,27,NO,FRI09,Fridge,5,fine,3,0
+MM7849,Batch 1236,Meat,Roasted Pork ca. 110g,2020-12-20,13,NO,FRI10,Fridge,6,fine,3,0
+MM7888,Batch 1240,Meat,Beef 2pc 200g,2020-12-25,18,NO,FRI11,Fridge,2,fresh and okay texture ,3,0
+FF9090,Batch 1240,Fruit,Avocado 1 piece,2020-12-07,0,TRASH,SH06,Shelf,2,bad smell -  check,1,0
+FF6543,Batch 1240,Fruit,Zespri Kiwifruit 1kg,2020-12-23,16,NO,SH06,Shelf,15,Softening of texture or loss of firmness ,3,0
+FF3892,Batch 1243,Fruit,Dole Banana 1kg,2020-12-24,17,NO,SH06,Shelf,36,fresh and okay texture ,3,0
+FF3891,Batch 1243,Fruit,Elstars Apple ,2020-12-24,17,30% OFF,SH06,Shelf,6,fresh and okay texture ,2,0.3
+FF3890,Batch 1243,Fruit,Peach 1kg,2020-12-26,19,NO,SH06,Shelf,3,fresh and okay texture ,3,0
+FF3893,Batch 1243,Fruit,Zespri Kiwifruit Gold,2020-12-27,20,NO,SH06,Shelf,2,fresh and okay texture ,3,0
+FF3894,Batch 1243,Fruit,Strawberry Holland,2020-12-28,21,NO,SH06,Shelf,11,fresh and okay texture ,3,0
