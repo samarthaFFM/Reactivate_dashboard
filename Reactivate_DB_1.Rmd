@@ -64,7 +64,7 @@ LeftColumn {.sidebar data-width=220}
 numericInput(
   inputId="Freshdays",
   label="Remaining FreshDays",
-  value = 14,
+  value = 365,
   min = 0,
   max = 365,
   step = 1,

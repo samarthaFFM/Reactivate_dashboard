@@ -1,0 +1,12 @@
+name: Reactivate-Dashboard
+title: Reactivate-Dashboard
+username:
+account: baum
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3448362
+bundleId: 4065523
+url: https://baum.shinyapps.io/Reactivate-Dashboard/
+when: 1609958818.22649
+asMultiple: FALSE
+asStatic: FALSE
