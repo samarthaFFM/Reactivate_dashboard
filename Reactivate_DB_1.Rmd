@@ -141,7 +141,7 @@ dataframe_filtered_without_days <- reactive({
 
 ProductTableColumn {data-width=350}
 -----------------------------------------------------------------------
-### Product list and location
+### Filtered Product List
 
 ```{r table}
 #display top 10 items that require attention table here
