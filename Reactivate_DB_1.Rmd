@@ -49,7 +49,8 @@ Dashboard for supermarket employees {data-icon="fa-user-shield"}
 
 LeftColumn {.sidebar data-width=200} 
 -------------------------------------
-Filter the data:
+
+##### Filter the data:
 
 ```{r filters}
 # You can make this sidebar global by putting it ahead of Tab 1
@@ -63,9 +64,9 @@ Filter the data:
 numericInput(
   inputId="Freshdays",
   label="Remaining FreshDays",
-  value = 7,
+  value = 14,
   min = 0,
-  max = 100,
+  max = 365,
   step = 1,
   width = NULL
 )
@@ -139,7 +140,9 @@ dataframe_filtered_without_days <- reactive({
 
 ```
 
-> **Descripton**
+---
+
+### Description
 
 ReActivate provides discount predictions for all products automatically using our cutting-edge AI. You can choose and print the discount label that you want! 
 
@@ -200,7 +203,7 @@ renderPlot({dataframe_filtered() %>% mutate(today = rep(today, length(Freshdays)
   xlab('Days till expiry') + geom_label_repel(aes(label = Freshdays),
                   box.padding   = 0.35, 
                   point.padding = 0.5,
-                  segment.color = 'grey50')  + geom_point(aes(size=3)) + scale_color_manual(values=c("#FF0000", "#FF0000", "#008000")) + guides(color = FALSE, size = FALSE) + theme_bw() +  theme(axis.text.x=element_text(size=13, angle=45, hjust=1),axis.text.y=element_text(size=13), text = element_text(size=13)) + labs(fill = "Priority")
+                  segment.color = 'grey50')  + geom_point(aes(size=3)) + scale_color_manual(values=c("#e74c3cb3", "#e74c3cb3", "#18bc9cb3")) + guides(color = FALSE, size = FALSE) + theme_bw() +  theme(axis.text.x=element_text(size=13, angle=45, hjust=1),axis.text.y=element_text(size=13), text = element_text(size=13)) + labs(fill = "Priority")
  })
 
 
