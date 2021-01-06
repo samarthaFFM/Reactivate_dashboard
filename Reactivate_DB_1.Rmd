@@ -229,40 +229,6 @@ renderPlot({dataframe_filtered() %>% mutate(today = rep(today, length(Freshdays)
 RightColumn {data-width=100}
 -----------------------------------------------------------------------
 
-```{r print function}
-x = raw_data[which(raw_data$Discount_predictions != 0),]
-radioGroupButtons( # for categorical variables
-  inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
-  label = "PRINT LABEL", # NULL if you don't want a header
-  choiceNames = c("None", paste(unique(x$Discount_predictions*100),'%')), # can use paste, etc to make nicer display
-  choiceValues = c("None", paste(unique(x$Discount_predictions*100),'%')), # values in the data, need to line up with above
-  justified = TRUE, # will fill the width of the container it sits in (sidebar)
-  status = "primary"
-)
-```
-
-### Expired or expiring next
-```{r all products to be checked}
-
-#to do 
-#Counter list of products already checked today
-
-renderValueBox({
-  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays < 7) %>% nrow(), 
-                     big.mark = ','), icon = 'fa-walking')
-})
-```
-
-### Expired today - To be thrashed
-```{r expired}
-
-#Counter list of products to be checked today
-renderValueBox({
-  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays <= 0) %>% nrow(), 
-                     big.mark = ','), icon = 'fa-dizzy', color = 'danger')
-})
-```
-
 ### Today's workload
 ```{r}
 renderGauge({
@@ -276,6 +242,30 @@ renderGauge({
   ))
 })
 ```
+
+<!-- ### Expired or expiring next -->
+<!-- ```{r all products to be checked} -->
+
+<!-- #to do  -->
+<!-- #Counter list of products already checked today -->
+
+<!-- renderValueBox({ -->
+<!--   valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays < 7) %>% nrow(),  -->
+<!--                      big.mark = ','), icon = 'fa-walking') -->
+<!-- }) -->
+<!-- ``` -->
+
+### Expired today - To be thrashed
+```{r expired}
+
+#Counter list of products to be checked today
+renderValueBox({
+  valueBox(prettyNum(dataframe_filtered() %>% filter(Freshdays <= 0) %>% nrow(), 
+                     big.mark = ','), icon = 'fa-dizzy', color = 'danger')
+})
+```
+
+
 
 ### Expires within a week - Check soon!
 ```{r week 1}
@@ -314,6 +304,19 @@ renderGauge({
 })
 ```
 
+### Print Label
+
+```{r print function}
+x = raw_data[which(raw_data$Discount_predictions != 0),]
+radioGroupButtons( # for categorical variables
+  inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
+  label = NULL, # NULL if you don't want a header
+  choiceNames = c("None", paste(unique(x$Discount_predictions*100),'%')), # can use paste, etc to make nicer display
+  choiceValues = c("None", paste(unique(x$Discount_predictions*100),'%')), # values in the data, need to line up with above
+  justified = TRUE, # will fill the width of the container it sits in (sidebar)
+  status = "primary"
+)
+```
 
 Inventory {data-icon="fa-columns" data-orientation=rows}
 =====================================
