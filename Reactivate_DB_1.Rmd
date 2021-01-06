@@ -256,7 +256,7 @@ renderGauge({
 <!-- }) -->
 <!-- ``` -->
 
-### Expired today - To be thrashed
+### Expired today - Remove from shelves
 ```{r expired}
 
 #Counter list of products to be checked today
