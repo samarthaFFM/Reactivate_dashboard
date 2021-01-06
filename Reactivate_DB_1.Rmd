@@ -224,7 +224,7 @@ renderPlot({dataframe_filtered() %>% mutate(today = rep(today, length(Freshdays)
 ```
 
 
-RightColumn {data-width=150}
+RightColumn {data-width=100}
 -----------------------------------------------------------------------
 
 ```{r print function}
@@ -269,8 +269,8 @@ renderGauge({
   max <- dataframe_filtered() %>% filter(Freshdays < 7) %>% nrow()
   step <- (max - min) / 3
   gauge(value, min = min, max = max, symbol = '', 
-        gaugeSectors(success = c(min, step-0.5), warning = c(step, 2*step-0.5), 
-                     danger = c(2*step, max)
+        gaugeSectors(success = c(min-0.5, step-0.5), warning = c(step, 2*step-0.5), 
+                     danger = c(2*step, max+0.5)
   ))
 })
 ```
@@ -307,7 +307,7 @@ renderGauge({
                     nrow()) / total
   value <- ifelse(total == 0, 100, round(value * 100, digits = 1))
   gauge(value, min = min, max = max, symbol = '%', gaugeSectors(
-    success = c(80, max), warning = c(40, 79), danger = c(min, 39)
+    success = c(80, max+0.5), warning = c(40, 79), danger = c(min-0.5, 39)
   ))
 })
 ```
