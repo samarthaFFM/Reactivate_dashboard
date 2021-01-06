@@ -181,8 +181,8 @@ renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
 
 
 
-renderPlot({dataframe_filtered() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
-  ggplot(aes(x = time, y = Product_ID )) +
+renderPlot({dataframe_filtered() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, Description, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
+  ggplot(aes(x = time, y = Description )) +
   geom_line(aes(color= factor(Priority_clusters))) + 
   geom_point() +
   ylab('Product ID') +
