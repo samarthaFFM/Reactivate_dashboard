@@ -158,7 +158,8 @@ ProductTableColumn {data-width=350}
 ```{r table}
 #display top 10 items that require attention table here
 
-renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
+renderTable({dataframe_filtered() %>% arrange(Priority_clusters) %>% select(-c(Batch.code, Priority_clusters, Discount_predictions)) 
+  })
 #datatable(reactive({dataframe_filtered() %>% arrange(Priority_clusters)}))																   
 
 # #this will display a top 10 table that is filtered based on the selections above
