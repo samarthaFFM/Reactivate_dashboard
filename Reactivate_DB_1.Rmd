@@ -179,17 +179,17 @@ renderTable({dataframe_filtered() %>% arrange(Priority_clusters)})
 #   ylab('Product ID') +
 #   xlab('days till expiry')})
 
+today = as.Date('2020-12-07')
 
-
-renderPlot({dataframe_filtered() %>% mutate(today = rep(Sys.Date(), length(Freshdays)))  %>% select(Product_ID, Description, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
+renderPlot({dataframe_filtered() %>% mutate(today = rep(today, length(Freshdays)))  %>% select(Product_ID, Description, today, Expiration, Freshdays,Category, Priority_clusters) %>%  mutate(Expiration_date = as.Date(Expiration)) %>% gather(date,time, today, Expiration_date)  %>%
   ggplot(aes(x = time, y = Description )) +
-  geom_line(aes(color= factor(Priority_clusters))) + 
-  geom_point() +
-  ylab('Product ID') +
-  xlab('days till expiry') + geom_label_repel(aes(label = Freshdays),
+  geom_line(aes(color= factor(Priority_clusters), size=3)) + 
+  ylab('Product') +
+  xlab('Days till expiry') + geom_label_repel(aes(label = Freshdays),
                   box.padding   = 0.35, 
                   point.padding = 0.5,
-                  segment.color = 'grey50') +theme_classic2() })
+                  segment.color = 'grey50')  + geom_point(aes(size=3)) + scale_color_manual(values=c("#FF0000", "#FF0000", "#008000")) + guides(color = FALSE, size = FALSE) + theme_bw() +  theme(axis.text.x=element_text(size=13, angle=45, hjust=1), text = element_text(size=13)) + labs(fill = "Priority")
+ })
 
 
 # line_plot <- dataframe_filtered() %>% arrange(Priority_clusters) %>%
