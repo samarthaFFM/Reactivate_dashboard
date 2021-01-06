@@ -139,6 +139,10 @@ dataframe_filtered_without_days <- reactive({
 
 ```
 
+> Descripton
+
+
+
 ProductTableColumn {data-width=350}
 -----------------------------------------------------------------------
 ### Filtered Product List
@@ -188,7 +192,7 @@ renderPlot({dataframe_filtered() %>% mutate(today = rep(today, length(Freshdays)
   xlab('Days till expiry') + geom_label_repel(aes(label = Freshdays),
                   box.padding   = 0.35, 
                   point.padding = 0.5,
-                  segment.color = 'grey50')  + geom_point(aes(size=3)) + scale_color_manual(values=c("#FF0000", "#FF0000", "#008000")) + guides(color = FALSE, size = FALSE) + theme_bw() +  theme(axis.text.x=element_text(size=13, angle=45, hjust=1), text = element_text(size=13)) + labs(fill = "Priority")
+                  segment.color = 'grey50')  + geom_point(aes(size=3)) + scale_color_manual(values=c("#FF0000", "#FF0000", "#008000")) + guides(color = FALSE, size = FALSE) + theme_bw() +  theme(axis.text.x=element_text(size=13, angle=45, hjust=1),axis.text.y=element_text(size=13), text = element_text(size=13)) + labs(fill = "Priority")
  })
 
 
