@@ -1,4 +1,4 @@
-Product_ID,Batch code,Category,Description,Expiration,Freshdays,StatusNow,Location_ID,Location,InventoryQTY,"Quality (smell, colour, textures, hardness)",Priority_clusters,Discount_predictions
+Product_ID,Batch code,Category,Description,Expiration,Freshdays,StatusNow,Location_ID,Location,InventoryQTY,Quality,Priority_clusters,Discount_predictions
 AA1111,Batch 1233,Yogurt,Banana Yogurt 1L,2020-12-07,0,TRASH,FRI23,Fridge,3,bad smell -  check,1,0
 AA1222,Batch 1233,Yogurt,Strawberry Yogurt 0.1% fett 1L,2020-12-11,4,30% OFF,FRI23,Fridge,4,fresh and okay texture ,2,0.3
 AA1333,Batch 1233,Yogurt,Blueberry Vanille Yogurt 1L,2021-05-06,150,NO,FRI23,Fridge,13,fine,3,0
