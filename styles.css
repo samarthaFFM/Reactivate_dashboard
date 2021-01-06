@@ -39,6 +39,15 @@ body {
     border-color: #44526a;
 }
 
+.irs-bar {
+    border-top: 1px solid #3498dbb3;
+    border-bottom: 1px solid #3498dbb3;
+    background: #3498dbb3;
+}
+.irs-from, .irs-to, .irs-single {
+    background: #3498dbb3;
+}
+
 .bg-primary {
   background-color: rgba(44, 62, 80, 0.7);
 }
