@@ -141,7 +141,13 @@ dataframe_filtered_without_days <- reactive({
 
 > Descripton
 
+ReActivate provides discount predictions for all products automatically using our cutting-edge AI. You can choose and print the discount label that you want! 
 
+Line chart reference - Product type vs time
+
+Red: Check and print discount immediately
+Green: Ok! Approaching expiry
+Label: Number of days till expiry
 
 ProductTableColumn {data-width=350}
 -----------------------------------------------------------------------
