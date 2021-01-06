@@ -85,10 +85,10 @@ checkboxGroupInput(
 checkboxGroupInput(
   inputId="Location",
   label="Select by Location",
-  choices = c("FRIDGE", "SHELF"),
+  choices = c("Fridge", "Shelf"),
   #plz note "Fridges" instead of FRI124(fridge+number in datasheet) is shown here.
   #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet
-  selected = c("FRIDGE", "SHELF")
+  selected = c("Fridge", "Shelf")
 )
 # 
 
