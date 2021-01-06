@@ -305,7 +305,9 @@ renderGauge({
 })
 ```
 
-### Print Label
+### Print Discount offer 
+
+Print the discount offer label according to the product selected 
 
 ```{r print function}
 x = raw_data[which(raw_data$Discount_predictions != 0),]
