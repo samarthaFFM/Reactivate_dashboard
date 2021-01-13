@@ -315,14 +315,33 @@ Print the discount offer label according to the product selected
 ```{r print function}
 x = raw_data[which(raw_data$Discount_predictions != 0),]
 radioGroupButtons( # for categorical variables
-  inputId = "Print_Discount_percent", # this will allow the selection to be referenced as input$cyl
+  inputId = "printbutton", # this will allow the selection to be referenced as input$cyl
   label = NULL, # NULL if you don't want a header
   choiceNames = c("None", paste(unique(x$Discount_predictions*100),'%')), # can use paste, etc to make nicer display
   choiceValues = c("None", paste(unique(x$Discount_predictions*100),'%')), # values in the data, need to line up with above
   justified = TRUE, # will fill the width of the container it sits in (sidebar)
   status = "primary"
 )
+output$printbutton <- renderText({ 
+    input$printbutton
+  }) # textOutput("printbutton")
 ```
+
+```{r}
+observeEvent(input$printbutton, {
+  if(input$printbutton != "None") {
+    confirmSweetAlert(session = session, inputId = "print", title = "Print label?", text = "Do you want to print the selected discount label now?", type = "info", danger_mode = FALSE, btn_labels = c("No", "Yes"))
+    output$shouldprint <- renderPrint(input$print)
+    observeEvent(input$print, {
+      printresult <- reactive({input$print})
+      if(printresult() == TRUE) {
+        sendSweetAlert(session, title = "Successful", text = "Label printed successfully.", type = "success", btn_labels = "Ok")
+        }
+      })
+    }
+  })
+```
+
 
 Inventory {data-icon="fa-columns" data-orientation=rows}
 =====================================
