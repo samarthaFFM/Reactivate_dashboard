@@ -63,7 +63,7 @@ LeftColumn {.sidebar data-width=220}
 
 numericInput(
   inputId="Freshdays",
-  label="Remaining FreshDays",
+  label="Shelf life",
   value = 365,
   min = 0,
   max = 365,
@@ -75,7 +75,7 @@ numericInput(
 
 checkboxGroupInput(
   inputId="Category",
-  label="Select by Category",
+  label="Food Category",
   choices = c("Fruit", "Meat","Yogurt","Drink"),
   selected = c("Fruit", "Meat","Yogurt","Drink")
 )
@@ -85,7 +85,7 @@ checkboxGroupInput(
 
 checkboxGroupInput(
   inputId="Location",
-  label="Select by Location",
+  label="In-store Location",
   choices = c("Fridge", "Shelf"),
   #plz note "Fridges" instead of FRI124(fridge+number in datasheet) is shown here.
   #pay attention when filtering the datasheet, or just simply revise location into fridges/shelves in datasheet
@@ -109,7 +109,7 @@ disc_range = seq(from=0, to=100, by=100)
 
 sliderInput(
   inputId = "Discount_range", # referenced as input$displ
-  label = "Select discount label",
+  label = "Predicted Discount Label",
   value = disc_range, # default selection, you can move the range around
   min = 0, #(min(disc_range)),
   max = 100, #(max(disc_range)),
@@ -144,15 +144,18 @@ dataframe_filtered_without_days <- reactive({
 
 ### Description
 
-ReActivate provides discount predictions for all products automatically using our cutting-edge AI. You can choose and print the discount label that you want! 
+ReActivate automatically generates discount levels for nearly expiring food. By using AI and sales figures it predicts the best discount price at which the products should be sold. You can filter the discount range to scan the food and print its new price tags. 
 
-**Line chart reference** - *Product type vs time*
+---
 
-**Red**: Check and print discount immediately
+### Expiry Chart
 
-**Green**: Ok! Approaching expiry
+**Green Lines**: Food in good status
 
-**Label**: Number of days till expiry
+**Red Lines**: Nearly expired. Discount to sell soon.
+
+**Labels**: Remaining fresh days
+
 
 ProductTableColumn {data-width=350}
 -----------------------------------------------------------------------
@@ -182,7 +185,7 @@ renderTable({dataframe_filtered() %>% arrange(Priority_clusters) %>% select(-c(B
 ```
 
 
-### Expiry date indicator: Chart for number of days till the expiry of product
+### Line Chart of Expiry Days: The chart shows the number of days till the expiry
 
 ```{r}
 
@@ -259,7 +262,7 @@ renderGauge({
 <!-- }) -->
 <!-- ``` -->
 
-### Expired today - Remove from shelves
+### Expired today! Must be removed
 ```{r expired}
 
 #Counter list of products to be checked today
@@ -271,7 +274,7 @@ renderValueBox({
 
 
 
-### Expires within a week - Check soon!
+### Expires in a week. Check soon
 ```{r week 1}
 
 #Counter list of products to be checked today
@@ -283,7 +286,7 @@ renderValueBox({
 
 ```
 
-### All good products
+### In good status
 ```{r good for more than a week}
 
 renderValueBox({
@@ -308,9 +311,8 @@ renderGauge({
 })
 ```
 
-### Print Discount offer 
-
-Print the discount offer label according to the product selected 
+### Print Discount offer
+Print the discount offer label according to the product selected.
 
 ```{r print function}
 x = raw_data[which(raw_data$Discount_predictions != 0),]
