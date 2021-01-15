@@ -48,7 +48,7 @@ Dashboard for supermarket employees {data-icon="fa-user-shield"}
 =====================================
 
 ```{r}
-sendSweetAlert(session, title = "Thank you very much for making us the winners!", text = "We are so we are so overwhelmed by the result. Simply amazing that we convinced the jury in the end of this incredible chellanging and educative experience in the last months.", type = "success", btn_labels = "Congratulations!")
+sendSweetAlert(session, title = "Thank you very much for making us the winners!", text = "We are so we are so overwhelmed by the result. Simply amazing that we convinced the jury in the end of this incredible challanging and educative experience in the last months.", type = "success", btn_labels = "Congratulations!")
 ```
 
 
